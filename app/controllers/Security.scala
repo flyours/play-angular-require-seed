@@ -32,6 +32,7 @@ trait Security { self: Controller =>
         maybeToken flatMap { token =>
           cache.get[Long](token) map { userId =>
             if (xsrfTokenCookie.value == token) {
+              //f fun is very cool!
               f(token)(userId)(request)
             } else {
               Unauthorized(Json.obj("message" -> "Invalid Token"))
